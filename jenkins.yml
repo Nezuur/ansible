@@ -1,0 +1,41 @@
+---
+- name: Install jenkins
+  hosts: ci-integration
+  become: yes
+
+  tasks:
+  - name: Add jenkins key
+    apt_key:
+      state: present
+      url: "https://pkg.jenkins.io/debian/jenkins.io.key"
+
+  - name: Set repository
+    apt_repository:
+      repo: 'deb http://pkg.jenkins.io/debian-stable binary/'
+      state: present
+
+  - name: Installing java
+    become: true
+    apt:
+      name: openjdk-11-jdk
+      state: present
+
+  - name: Install jenkins
+    apt:
+      name: jenkins
+      state: latest
+
+  - name: Starting jenkins
+    service:
+      name: "jenkins"
+      state: started
+      enabled: yes
+
+  - name: Get init password Jenkins
+    shell: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+    changed_when: false
+    register: result
+
+  - name: Print init password Jenkins
+    debug:
+      var: result.stdout
