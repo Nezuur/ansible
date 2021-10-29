@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+<head>
+    <title>Lab 8. Skillfactory</title>
+    <meta charset="utf-8" />
+    <body>
+<div>
+    <h1>Header</h1>
+    <p>Plain text inside</p>
+</div>
+   </body>
+</head>
+</html>
