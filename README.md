@@ -1,2 +1,2 @@
-# ansible
-Labs about Ansible
+# Ansible
+Labs for learning Ansible
