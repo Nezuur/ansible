@@ -1,0 +1,16 @@
+---
+- hosts: production_servers
+  become: yes
+  tasks:
+
+  - name: Add user to remote hosts
+    user:
+      name: alex3
+      generate_ssh_key: yes
+      ssh_key_bits: 2048
+      ssh_key_file: /home/alex2/.ssh/id_rsa
+
+  - name: Download SSH key
+    fetch:
+      src: /home/alex3/.ssh/id_rsa
+      dest: /home/alex/ansible/ssh/alex2/id_rsa
