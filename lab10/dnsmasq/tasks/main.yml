@@ -1,0 +1,38 @@
+---
+- name: install dnsmasq
+  apt:
+    name: dnsmasq
+    state: present
+  tags: install
+
+- name: set conf file
+  template:
+    src: dnsmasq.conf.j2
+    dest: /etc/dnsmasq.conf
+    validate: 'dnsmasq --test --conf-file=%s'
+  notify: restart
+  tags: config
+
+- name: Stop service systemd-resolved, if running
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+
+- name: Remove default resolv.conf
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: Add a line to a file if the file does not exist, without passing regexp
+  ansible.builtin.lineinfile:
+    path: /etc/resolv.conf
+    line: nameserver 8.8.8.8
+    create: yes
+
+- name: service start
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+  tags: service

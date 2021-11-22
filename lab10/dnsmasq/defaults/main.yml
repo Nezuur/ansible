@@ -1,0 +1,7 @@
+---
+# defaults file for dnsmasq
+dnsmasq_listen_address: 127.0.0.1
+dnsmasq_domain_needed: true
+dnsmasq_bogus_priv: true
+dnsmasq_authoritative: false
+dnsmasq_expand_hosts: true
