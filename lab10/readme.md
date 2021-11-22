@@ -16,3 +16,8 @@ needs some preparation before. To transfer SSH key encrypted you have to do:
   - encrypt pub key with ansible vault (ansible-vault encrypt /dest/ssh/key.pub)
   - run playnook with vault key (ansible-playbook userc.yml --ask-vault-pass)
 than it'll create user on remote host, esure that SSH directory is exist, and after that transfer encrypted key to r.host while decrypting it.
+
+## **postfix.yml** 
+An example of how tag works.
+  - ansible-playbook postfix.yml --tags init (Will install apk postfix)
+  - ansible-playbook postfix.yml --tags drop (Will uninstall apk postfix)
