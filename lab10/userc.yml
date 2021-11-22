@@ -1,0 +1,21 @@
+---
+- hosts: production_servers
+  become: yes
+  gather_facts: no
+  tasks:
+
+  - name: Add user to remote hosts
+    user:
+      name: alex3
+
+  - name: Create SSH directory 
+    file:
+      path: /home/alex3/.ssh
+      state: directory
+
+  - name: Move public key to dest server
+    copy:
+      src: /home/alex/ansible/ssh/key.pub
+      dest: /home/alex3/.ssh/key.pub
+      decrypt: yes
+      mode: 0600
