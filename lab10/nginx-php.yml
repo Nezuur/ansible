@@ -1,5 +1,5 @@
 ---
-- name: Ensure nginx and php-fpm is installed.
+- name: nginx and php-fpm install
   apt:
     name: "{{item}}"
     update_cache: yes
@@ -7,6 +7,7 @@
   loop:
     - nginx
     - php7.4-fpm
+    
 - name: Ensure service is running
   ansible.builtin.service:
     name: "{{item}}"
@@ -15,6 +16,7 @@
   loop:
     - nginx
     - php7.4-fpm
+    
 - name: Copy nginx config
   copy:
     src: default
@@ -22,6 +24,7 @@
     mode: '0644'
   notify:
     - reload nginx
+
 - name: Copy index.php to default locatin
   copy:
     src: index.php
@@ -31,6 +34,7 @@
     mode: '0644'
   notify:
     - reload nginx
+
 - name: Create a directory if it does not exist
   ansible.builtin.file:
     path: /opt/nginx/ansible/
@@ -38,6 +42,7 @@
     mode: '0755'
     owner: www-data
     group: www-data
+    
 - name: Copy index.php to new location
   copy:
     src: index.php
@@ -45,6 +50,7 @@
     owner: www-data
     group: www-data
     mode: '0644'
+
 - name: Chenge document root folder
   ansible.builtin.lineinfile:
     path: /etc/nginx/sites-available/default
