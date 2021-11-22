@@ -1,0 +1,6 @@
+---
+- hosts: production_servers
+  gather_facts: no
+  become: yes
+  roles:
+    - tftpd
