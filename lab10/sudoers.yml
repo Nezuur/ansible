@@ -1,12 +1,12 @@
 ---
 - name: sudo users create
-  hosts: 
+  hosts: production_servers
   become: true
   remote_user: root
   vars:
     superusers:
-      user1: 123456
-      user2: 654321
+      user1: abc123456
+      user2: cab654321
   tasks:
   - name: check group superuser
     ansible.builtin.group:
