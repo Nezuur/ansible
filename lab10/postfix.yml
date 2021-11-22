@@ -1,0 +1,15 @@
+---
+- hosts: production_servers
+  become: True
+  gather_facts: no
+#  roles:
+#   - { role: adfinis-sygroup.postfix }
+
+  tasks:
+  - name: Install postfix
+    apt: name=postfix state=present
+    tags: init
+    
+  - name: Uninstall postfix
+    apt: name=postfix state=absent
+    tags: drop
