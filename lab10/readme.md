@@ -1,4 +1,4 @@
-# This is decription of the Lab 10 module's tasks.
+# This is a decription of the Lab 10 module's tasks.
 ____
 
 ## **docker.yml** 
