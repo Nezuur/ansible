@@ -1,0 +1,29 @@
+---
+- name: sudo users create
+  hosts: 
+  become: true
+  remote_user: root
+  vars:
+    superusers:
+      user1: 123456
+      user2: 654321
+  tasks:
+  - name: check group superuser
+    ansible.builtin.group:
+      name: superuser
+      state: present
+
+  - name: check group have sudo rights
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers
+      state: present
+      line: "%superuser  ALL=(ALL:ALL) ALL"
+      validate: /usr/sbin/visudo -cf %s
+
+  - name: create users and add to s groups
+    user:
+      name: "{{item.key}}"
+      shell: /bin/bash
+      groups: "superuser"
+      password: "{{item.value | password_hash('sha512')}}"
+    loop: "{{ superusers | dict2items }}"
